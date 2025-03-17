@@ -95,7 +95,7 @@
 						</div>
 					{/await}
 					<div class="flex flex-col">
-						<span class="text-nowrap">{file.name}</span>
+						<span class="ellipsis">{file.name}</span>
 						<span class="text-xs text-muted-foreground">{displaySize(file.size)}</span>
 					</div>
 				</div>

@@ -3,9 +3,9 @@
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
 	export type FileRejectedReason =
-		| 'Maximum file size exceeded'
-		| 'File type not allowed'
-		| 'Maximum files uploaded';
+		| '超出最大文件文件大小'
+		| '不支持的文件类型'
+		| '超出最大文件数量';
 
 	export interface FileDropZoneProps extends Omit<HTMLInputAttributes, 'multiple'> {
 		/** Called with the uploaded files when the user drops or clicks and selects their files.
@@ -105,9 +105,9 @@
 	};
 
 	const shouldAcceptFile = (file: File, fileNumber: number): FileRejectedReason | undefined => {
-		if (maxFileSize !== undefined && file.size > maxFileSize) return 'Maximum file size exceeded';
+		if (maxFileSize !== undefined && file.size > maxFileSize) return '超出最大文件文件大小';
 
-		if (maxFiles !== undefined && fileNumber > maxFiles) return 'Maximum files uploaded';
+		if (maxFiles !== undefined && fileNumber > maxFiles) return '超出最大文件数量';
 
 		if (!accept) return undefined;
 
@@ -131,7 +131,7 @@
 			return fileType === pattern;
 		});
 
-		if (!isAcceptable) return 'File type not allowed';
+		if (!isAcceptable) return '不支持的文件类型';
 
 		return undefined;
 	};
@@ -187,18 +187,18 @@
 			</div>
 			<div class="flex flex-col gap-0.5 text-center">
 				<span class="font-medium text-muted-foreground">
-					Drag 'n' drop files here, or click to select files
+					拖拽文件到这里，或点击选择文件
 				</span>
 				{#if maxFiles || maxFileSize}
 					<span class="text-sm text-muted-foreground/75">
 						{#if maxFiles}
-							<span>You can upload {maxFiles} files</span>
+							<span>你可以上传 {maxFiles} 个文件</span>
 						{/if}
 						{#if maxFiles && maxFileSize}
-							<span>(up to {displaySize(maxFileSize)} each)</span>
+							<span>(每个文件最大 {displaySize(maxFileSize)})</span>
 						{/if}
 						{#if maxFileSize && !maxFiles}
-							<span>Maximum size {displaySize(maxFileSize)}</span>
+							<span>每个文件最大 {displaySize(maxFileSize)}</span>
 						{/if}
 					</span>
 				{/if}
